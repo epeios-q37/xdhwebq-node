@@ -19,6 +19,8 @@
 
 // NOT TO CONFUSE WITH '../js/xdhwebq.js', which is red by the web browser.
 
+'use strict'
+
 /* Some log facilities */
 Object.defineProperty(global, '__stack', {
 	get: function () {
@@ -70,6 +72,10 @@ var njsq = null;
 var componentPath = "";
 var componentFilename = "";
 var xdhqxdhModule = "";
+var epeiosPath = "";
+var xdhtmlJSPath = "";
+var xdhwebqJSPath = "";
+var cdnPath = "";
 
 if (process.env.EPEIOS_SRC) {
 	if (process.platform == 'win32') {

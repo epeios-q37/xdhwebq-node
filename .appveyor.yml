@@ -2,12 +2,12 @@ environment:
   version: 20171228
   affix: xdhwebq
   matrix:
-    - nodejs_version: "9"
-    - nodejs_version: "8"
-    - nodejs_version: "7"
-    - nodejs_version: "6"
-    - nodejs_version: "5"
     - nodejs_version: "4"
+    - nodejs_version: "5"
+    - nodejs_version: "6"
+    - nodejs_version: "7"
+    - nodejs_version: "8"
+    - nodejs_version: "9"
 
 skip_tags: true	
 
