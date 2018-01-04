@@ -219,12 +219,12 @@ function launch( service ) {
 }
 
 if ((typeof firstAction === "string") && (firstAction != "")) {
-	njsq._wrapper(xdhwebq, 1, require(xdhqxdhId));
+	njsq._wrapper(xdhwebq, 1, require(xdhqxdhId).fileName);
 	launch(process.argv[4]);
 }
 
 module.exports.returnArgument = (text) => njsq._wrapper(xdhwebq, 0, text);
 module.exports.serve = serve;
 module.exports.launch = launch;
-module.exports = path.normalize(path.join(selfPath, "XDHWebQ.js" ));
+module.exports.fileName = path.normalize(path.join(selfPath, "XDHWebQ.js" ));
 
