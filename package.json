@@ -15,7 +15,7 @@
     "host": "https://github.com"
   },
   "dependencies": {
-   "njsq": "2017.12.25"
+   "njsq": "2017.12.26"
   },
   "devDependencies": {
 
