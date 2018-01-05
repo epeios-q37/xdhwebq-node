@@ -199,8 +199,6 @@ function setCast(doc, id, cast) {
 	var castElement = doc.getElementById(cast);
 
 	if (castElement != null) {
-		// log( "CAST !!! : " + cast  + " ; " + id );
-
 		var kind = castElement.getAttribute("kind");
 
 		if (kind)
@@ -231,8 +229,6 @@ function setCast(doc, id, cast) {
 	var element = doc.getElementById(id);
 
 	if (element != null) {
-		// log( "CAST !!! : " + cast  + " ; " + id );
-
 		applyCast(element, cast);
 	}
 }
