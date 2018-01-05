@@ -1,5 +1,5 @@
 environment:
-  version: 2017.12.29
+  version: 20180105
   affix: xdhwebq
   matrix:
     - nodejs_version: "4"
