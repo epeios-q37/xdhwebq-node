@@ -309,30 +309,6 @@ static void SetContents_(
 	SetContents_( Callback, Ids, Contents );
 }
 
-static void SetCastsByIds_(
-	cJS &Callback,
-	const nchar__ *Ids,
-	const nchar__ *Casts )
-{
-qRH;
-qRB;
-	Execute( Callback, xdhujs::snCastsSetter, NULL, nstring___( Ids ).Internal()(), nstring___( Casts ).Internal()() );
-qRR;
-qRT;
-qRE;
-}
-
-static void SetCastsByIds_(
-	cJS &Callback,
-	va_list List )
-{
-	// NOTA : we use variables, because if we put 'va_arg()' directly as parameter to below function, it's not sure that they are called in the correct order.
-	const nchar__ *Ids = va_arg( List, const nchar__ * );
-	const nchar__ *Casts = va_arg( List, const nchar__ * );
-
-	SetCastsByIds_( Callback, Ids, Casts );
-}
-
 namespace{
 	namespace {
 		// TODO: to optimize.
@@ -422,50 +398,6 @@ namespace{
 	qRT;
 	qRE;
 	}
-}
-
-static void SetCastsByTags_(
-	cJS &Callback,
-	const nchar__ *Id,
-	const nchar__ *RawTags,
-	const nchar__ *RawValues )
-{
-qRH
-	ntvstr::rBuffer Result;
-	str::wString RawDigest;
-	xdhcmn::digest Digest;
-	str::wString Tags, Values, Ids, CorrespondingValues;	// Merged.
-qRB
-	RawDigest.Init( Execute( Callback, xdhujs::snCastsFetcher, &Result, Id ) );
-
-	Digest.Init();
-	xdhcmn::Split( RawDigest, Digest );
-
-	Tags.Init();
-	nstring___( RawTags ).UTF8( Tags );
-
-	Values.Init();
-	nstring___( RawValues ).UTF8( Values );
-
-	tol::Init( Ids, CorrespondingValues );
-	MatchTagsWithIds_( Digest, Tags, Values, Ids, CorrespondingValues );
-
-	Execute( Callback, xdhujs::snCastsSetter, NULL, nstring___( Ids ).Internal()(), nstring___( CorrespondingValues ).Internal()() );
-qRR
-qRT
-qRE
-}
-
-static void SetCastsByTags_(
-	cJS &Callback,
-	va_list List )
-{
-	// NOTA : we use variables, because if we put 'va_arg()' directly as parameter to below function, it's not sure that they are called in the correct order.
-	const nchar__ *Id = va_arg( List, const nchar__ * );
-	const nchar__ *Tags = va_arg( List, const nchar__ * );
-	const nchar__ *Casts = va_arg( List, const nchar__ * );
-
-	SetCastsByTags_( Callback, Id, Tags, Casts );
 }
 
 static void GetValue_(
@@ -593,6 +525,149 @@ static void GetResult_(
 	GetResult_( Callback, va_arg( List, const nchar__ * ), Result );
 }
 
+namespace {
+	void InsertCSSRule_(
+		cJS &Callback,
+		const nchar__ *Rule,
+		const nchar__ *Index )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, xdhujs::snCSSRuleInserter, NULL, nstring___( Rule ).Internal()(), nstring___( Index ).Internal()() );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+void InsertCSSRule_(
+	cJS &Callback,
+	va_list List )
+{
+	// NOTA : we use variables, because if we put 'va_arg()' directly as parameter to below function, it's not sure that they are called in the correct order.
+	const nchar__ *Rule = va_arg( List, const nchar__ * );
+	const nchar__ *Index = va_arg( List, const nchar__ * );
+
+	InsertCSSRule_( Callback, Rule, Index );
+}
+
+namespace {
+	void AppendCSSRule_(
+		cJS &Callback,
+		const nchar__ *Rule,
+		TOL_CBUFFER___ *Index )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, xdhujs::snCSSRuleAppender, Index, Rule );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+static void AppendCSSRule_(
+	cJS &Callback,
+	TOL_CBUFFER___ *Result,
+	va_list List )
+{
+	AppendCSSRule_( Callback, va_arg( List, const nchar__ * ), Result );
+}
+
+
+
+namespace {
+	void RemoveCSSRule_(
+		cJS &Callback,
+		const nchar__ *Index )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, xdhujs::snCSSRuleRemover, NULL, nstring___( Index ).Internal()() );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+static void RemoveCSSRule_(
+	cJS &Callback,
+	va_list List )
+{
+	RemoveCSSRule_( Callback, va_arg( List, const nchar__ * ) );
+}
+
+namespace {
+	void HandleClasses_(
+		cJS &Callback,
+		xdhujs::script_name__ ScriptName,
+		const nchar__ *Ids,
+		const nchar__ *Classes )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, ScriptName, NULL, nstring___( Ids ).Internal()(), nstring___( Classes ).Internal()() );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+
+static void HandleClasses_(
+	cJS &Callback,
+	xdhujs::script_name__ ScriptName,
+	va_list List )
+{
+	// NOTA : we use variables, because if we put 'va_arg()' directly as parameter to below function, it's not sure that they are called in the correct order.
+	const nchar__ *Ids = va_arg( List, const nchar__ * );
+	const nchar__ *Classes = va_arg( List, const nchar__ * );
+
+	HandleClasses_( Callback, ScriptName, Ids, Classes );
+}
+
+namespace {
+	void EnableElements_(
+		cJS &Callback,
+		const nchar__ *Ids )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, xdhujs::snElementsEnabler, NULL, nstring___( Ids ).Internal()() );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+static void EnableElements_(
+	cJS &Callback,
+	va_list List )
+{
+	EnableElements_( Callback, va_arg( List, const nchar__ * ) );
+}
+
+namespace {
+	void DisableElements_(
+		cJS &Callback,
+		const nchar__ *Ids )
+	{
+	qRH;
+	qRB;
+		Execute( Callback, xdhujs::snElementsDisabler, NULL, nstring___( Ids ).Internal()() );
+	qRR;
+	qRT;
+	qRE;
+	}
+}
+
+static void DisableElements_(
+	cJS &Callback,
+	va_list List )
+{
+	DisableElements_( Callback, va_arg( List, const nchar__ * ) );
+}
+
 static script_name__ Convert_( xdhcmn::function__ Function )
 {
 	switch ( Function ) {
@@ -647,10 +722,30 @@ static script_name__ Convert_( xdhcmn::function__ Function )
 	case xdhcmn::fSetContents:
 		qRFwk();
 		break;
-	case xdhcmn::fSetCastsByIds:
+	case xdhcmn::fInsertCSSRule:
 		qRFwk();
 		break;
-	case xdhcmn::fSetCastsByTags:
+	case xdhcmn::fAppendCSSRule:
+		qRFwk();
+		break;
+	case xdhcmn::fRemoveCSSRule:
+		qRFwk();
+		break;
+	case xdhcmn::fAddClasses:
+		qRFwk();
+		break;
+	case xdhcmn::fRemoveClasses:
+		qRFwk();
+		break;
+	case xdhcmn::fToggleClasses:
+		qRFwk();
+		break;
+	case xdhcmn::fEnableElements:
+		qRFwk();
+		break;
+	case xdhcmn::fDisableElements:
+		qRFwk();
+		break;
 	default:
 		qRFwk();
 		break;
@@ -700,11 +795,29 @@ void xdhujp::sProxyCallback::XDHCMNProcess(
 	case xdhcmn::fSetContents:
 		SetContents_( C_(), List);
 		break;
-	case xdhcmn::fSetCastsByIds:
-		SetCastsByIds_( C_(), List );
+	case xdhcmn::fInsertCSSRule:
+		InsertCSSRule_( C_(), List );
 		break;
-	case xdhcmn::fSetCastsByTags:
-		SetCastsByTags_( C_(), List );
+	case xdhcmn::fAppendCSSRule:
+		AppendCSSRule_( C_(), Result, List );
+		break;
+	case xdhcmn::fRemoveCSSRule:
+		RemoveCSSRule_( C_(), List );
+		break;
+	case xdhcmn::fAddClasses:
+		HandleClasses_( C_(), xdhujs::snClassesAdder, List );
+		break;
+	case xdhcmn::fRemoveClasses:
+		HandleClasses_( C_(), xdhujs::snClassesRemover, List );
+		break;
+	case xdhcmn::fToggleClasses:
+		HandleClasses_( C_(), xdhujs::snClassesToggler, List );
+		break;
+	case xdhcmn::fEnableElements:
+		EnableElements_( C_(), List );
+		break;
+	case xdhcmn::fDisableElements:
+		DisableElements_( C_(), List );
 		break;
 	default:
 		qRFwk();

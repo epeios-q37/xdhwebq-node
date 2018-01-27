@@ -72,18 +72,11 @@
 					var digest = fetchWidgets( "%Id%" );
 					digest;
 				]]>     </Widgets>
-     <Casts><![CDATA[
-					var digest = fetchCasts( "%Id%" );
-					digest;
-				]]>     </Casts>
     </Fetcher>
     <Setter>
      <EventHandlers><![CDATA[
 					setEventHandlers( %Ids_%, %Events_% );
 				]]>     </EventHandlers>
-     <Casts><![CDATA[
-					setCasts( %Ids_%, %Casts_% );
-				]]>     </Casts>
      <Contents><![CDATA[
 					setContents( %Ids_%, %Contents_% );
 				]]>     </Contents>
@@ -119,6 +112,36 @@
 							jQuery( document.getElementById( "%Id%") ).%Method_%
 						]]>     </Selector>
     </Widget>
+    <CSSRule>
+     <Insert><![CDATA[
+							insertCSSRule( "%Rule%", %Index% );
+						]]>     </Insert>
+     <Append><![CDATA[
+							insertCSSRule( "%Rule%", -1 ).toString();
+						]]>     </Append>
+     <Remove><![CDATA[
+							removeCSSRule( %Index% );
+						]]>     </Remove>
+    </CSSRule>
+    <Classes>
+     <Add><![CDATA[
+							addClasses( %Ids_%, %Classes_% );
+						]]>     </Add>
+     <Remove><![CDATA[
+							removeClasses( %Ids_%, %Classes_% );
+						]]>     </Remove>
+     <Toggle><![CDATA[
+							toggleClasses( %Ids_% , %Classes_% );
+						]]>     </Toggle>
+    </Classes>
+    <Elements>
+     <Enable><![CDATA[
+							enableElements( %Ids_% );
+						]]>     </Enable>
+     <Disable><![CDATA[
+							disableElements( %Ids_% );
+						]]>     </Disable>
+    </Elements>
    </Scripts>
   </Definitions>
   <Definitions>

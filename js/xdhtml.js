@@ -17,12 +17,13 @@
 	along with the Epeios framework.  If not, see <http://www.gnu.org/licenses/>
 */
 
-var onEventAttributeName = "data-xdh-onevent";
-var onEventsAttributeName = "data-xdh-onevents";
-var widgetAttributeName = "data-xdh-widget";
-var castAttributeName = "data-xdh-cast";
-var castsAttributeName = "data-xdh-casts";
-var valueAttributeName = "data-xdh-value";
+const onEventAttributeName = "data-xdh-onevent";
+const onEventsAttributeName = "data-xdh-onevents";
+const widgetAttributeName = "data-xdh-widget";
+const castAttributeName = "data-xdh-cast";
+const castsAttributeName = "data-xdh-casts";
+const valueAttributeName = "data-xdh-value";
+const styleId = "XDHStyle";
 
 var counter = 0;
 var drag = false;
@@ -53,11 +54,16 @@ function parseXML(string) {
 function getStylesheet(xslString) {
 	var xsltProcessor = new XSLTProcessor();
 
-	var myXMLHTTPRequest = new XMLHttpRequest();
-	myXMLHTTPRequest.open("GET", xslString, false);
-	myXMLHTTPRequest.send(null);
+	//	console.log(xslString);
 
-	xsltProcessor.importStylesheet(parseXML(myXMLHTTPRequest.responseText));
+	if (true) {
+		var myXMLHTTPRequest = new XMLHttpRequest();
+		myXMLHTTPRequest.open("GET", xslString, false);
+		myXMLHTTPRequest.send(null);
+		xsltProcessor.importStylesheet(parseXML(myXMLHTTPRequest.responseText));
+	} else {
+		xsltProcessor.importStylesheet(parseXML(xslString));
+	}
 
 	return xsltProcessor;
 }
@@ -262,7 +268,7 @@ function patchATags(node)  // Patches the 'A' tags, so it does open in another b
 
 		if ((candidate = node.firstChild) == null) {
 			while (cont
-			        && ((candidate = node.nextSibling) == null)) {
+				&& ((candidate = node.nextSibling) == null)) {
 				node = node.parentNode;
 
 				if (node.isEqualNode(root))
@@ -345,7 +351,7 @@ function fetchEventHandlers(id) {
 
 		if ((candidate = node.firstChild) == null) {
 			while (cont
-			        && ((candidate = node.nextSibling) == null)) {
+				&& ((candidate = node.nextSibling) == null)) {
 				node = node.parentNode;
 
 				if (node.isEqualNode(root))
@@ -356,7 +362,7 @@ function fetchEventHandlers(id) {
 		node = candidate;
 	}
 
-	if ( typeof convertTrees === 'function')
+	if (typeof convertTrees === 'function')
 		convertTrees();	// from 'mktree'.
 
 	return digests;
@@ -418,7 +424,7 @@ function fetchCasts(id) {
 
 		if ((candidate = node.firstChild) == null) {
 			while (cont
-			        && ((candidate = node.nextSibling) == null)) {
+				&& ((candidate = node.nextSibling) == null)) {
 				node = node.parentNode;
 
 				if (node.isEqualNode(root))
@@ -497,7 +503,7 @@ function setEventHandlers(ids, events) {
 }
 
 function instantiateWidget(id, type, parameters) {
-	var script =  'jQuery( document.getElementById( "' + id + '") ).' + type + '(' + parameters + ');';
+	var script = 'jQuery( document.getElementById( "' + id + '") ).' + type + '(' + parameters + ');';
 	return script;
 }
 
@@ -626,5 +632,73 @@ function mktreeExpandToNode(element) {
 
 		if (element)
 			expandToItem(getOrGenerateId(tree), getOrGenerateId(element));
+	}
+}
+
+function getCSSRules() {
+	return document.getElementById(styleId).sheet;
+}
+
+function insertCSSRule(rule, index) {
+	var rules = getCSSRules();
+
+	if (index == -1)
+		index = rules.cssRules.length;
+
+	rules.insertRule(rule, index);
+
+	console.log(index);
+
+	return index;
+}
+
+function removeCSSRule(index) {
+	console.log(getCSSRules().cssRules.length + " : " + index);
+	getCSSRules().removeRule(index);
+}
+
+function handleClasses(ids, classes, method) {
+	var i = 0;
+
+	if (ids.length != classes.length)
+		throw "Inconsistency !";
+
+	while (i < ids.length) {
+		method(ids[i], classes[i]);
+
+		i++;
+	}
+}
+
+function addClasses(ids, classes) {
+	handleClasses(ids, classes, (id, clas) => document.getElementById(id).classList.add(clas));
+}
+
+function removeClasses(ids, classes) {
+	handleClasses(ids, classes, (id, clas) => document.getElementById(id).classList.remove(clas));
+}
+
+function toggleClasses(ids, classes) {
+	handleClasses(ids, classes, (id, clas) => document.getElementById(id).classList.toggle(clas));
+}
+
+function enableElements(ids) {
+	var i = 0;
+
+	while (i < ids.length) {
+		console.log(ids[i]);
+		document.getElementById(ids[i]).disabled = false;
+
+		i++;
+	}
+}
+
+function disableElements(ids) {
+	var i = 0;
+
+	while (i < ids.length) {
+		document.getElementById(ids[i]).disabled = true;
+
+		i++;
 	}
 }
