@@ -230,6 +230,8 @@ function launch(dir, action, service) {
 	else if (!Number.isInteger(service))
 		throw "Argument, if provided, is the port to listen to (8080 by default ) !";
 
+	njsq._call(xdhwebq, 1, require(xdhqxdhId).fileName);
+
 	http.createServer(
 		function (req, res) {
 			serve(req, res);
@@ -247,7 +249,7 @@ if (require.main === module) {
 	// Required as a module
 }
 
-njsq._call(xdhwebq, 1, require(xdhqxdhId).fileName);
+
 
 module.exports.returnArgument = (text) => njsq._call(xdhwebq, 0, text);
 module.exports.serve = serve;
