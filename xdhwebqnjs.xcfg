@@ -85,10 +85,10 @@
 					instantiateWidgets( %Ids_%, %Types_%, %ParametersSets_% );
 				]]>    </WidgetsInstantiator>
     <Focuser><![CDATA[
-						jQuery(document.getElementById( "%Id%" )).focus();
+						document.getElementById( "%Id%" ).focus();
 					]]>    </Focuser>
     <Selector><![CDATA[
-						jQuery(document.getElementById( "%Id%" )).select();
+						document.getElementById( "%Id%" ).select();
 					]]>    </Selector>
     <Log><![CDATA[
 						log( "%Message%" );
