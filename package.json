@@ -12,6 +12,7 @@
     "host": "https://github.com"
   },
   "dependencies": {
+    "node-pre-gyp": "0.8.x",
     "njsq": "2018.1.27"
   },
   "devDependencies": {},
