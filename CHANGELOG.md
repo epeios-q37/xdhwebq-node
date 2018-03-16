@@ -1,4 +1,12 @@
-# *XDHWebQ* changelog.
+# *XDHWebQ* *CHANGELOG*
+
+2018-02-18:
+- *xdhqwebqnjs*:
+  - (continued),
+
+2018-02-16:
+- *xdhqwebqnjs*:
+  - the action launched on new session is now handled by the wrappers,
 
 2018-01-09:
 - *xdhwebqnjs*:

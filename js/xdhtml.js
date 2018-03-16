@@ -20,8 +20,8 @@
 const onEventAttributeName = "data-xdh-onevent";
 const onEventsAttributeName = "data-xdh-onevents";
 const widgetAttributeName = "data-xdh-widget";
-const castAttributeName = "data-xdh-cast";
-const castsAttributeName = "data-xdh-casts";
+// const castAttributeName = "data-xdh-cast";
+// const castsAttributeName = "data-xdh-casts";
 const valueAttributeName = "data-xdh-value";
 const styleId = "XDHStyle";
 
@@ -51,43 +51,46 @@ function parseXML(string) {
 	return parser.parseFromString(string, "text/xml");
 }
 
-function getStylesheet(xslString) {
+function getStylesheet(xslName) {
 	var xsltProcessor = new XSLTProcessor();
 
-	//	console.log(xslString);
+	//	console.log(xslName);
 
-	if (true) {
-		var myXMLHTTPRequest = new XMLHttpRequest();
-		myXMLHTTPRequest.open("GET", xslString, false);
-		myXMLHTTPRequest.send(null);
-		xsltProcessor.importStylesheet(parseXML(myXMLHTTPRequest.responseText));
+	if (false ) {
+		xsltProcessor.importStylesheet(parseXML(xslName));
 	} else {
-		xsltProcessor.importStylesheet(parseXML(xslString));
+		let myXMLHTTPRequest = new XMLHttpRequest();
+//		myXMLHTTPRequest.open("GET", "file://h:/hg/epeios/tools/xdhq/examples/common/blank/" + xslName, false);
+		myXMLHTTPRequest.open("GET", xslName, false);
+		myXMLHTTPRequest.send(null);
+
+		xsltProcessor.importStylesheet(parseXML(myXMLHTTPRequest.responseText));
 	}
 
 	return xsltProcessor;
 }
 
-function transformToFragment(xmlString, xslString) {
-	return getStylesheet(xslString).transformToFragment(parseXML(xmlString), document);
+function transformToFragment(xml, xslName ) {
+	return getStylesheet(xslName).transformToFragment(parseXML(xml), document);
 }
 
-function transformToDocument(xmlString, xslString) {
-	return getStylesheet(xslString).transformToDocument(parseXML(xmlString)).documentElement;
+function transformToDocument(xml, xslName) {
+	return getStylesheet(xslName).transformToDocument(parseXML(xml)).documentElement;
 }
 
-function transformToText(xmlString, xslString) {
-	return transformToDocument(xmlString, xslString).textContent;
+function transformToText(xml, xslName) {
+	return transformToDocument(xml, xslName).textContent;
 }
 
-function transformToHTML(xmlString, xslString) {
-	return transformToDocument(xmlString, xslString).innerHTML;
+function transformToHTML(xml, xslName) {
+	return transformToDocument(xml, xslName).innerHTML;
 }
 
 function removeChildren(elementOrId) {
 	getElement(elementOrId).innerHTML = "";
 }
 
+/*
 function removeCastingChildren(doc) {
 	var element = doc.getElementById('xdh-casting');
 
@@ -98,6 +101,7 @@ function removeCastingChildren(doc) {
 
 	element.id = 'xdh-casting';
 }
+*/
 
 function handleBooleanAttribute(element, name, flag) {
 	if (flag)
@@ -106,6 +110,7 @@ function handleBooleanAttribute(element, name, flag) {
 		element.removeAttribute(name);
 }
 
+/*
 function applyCast(element, value) {
 	var plainRelated = false;
 	var dragRelated = false;
@@ -199,7 +204,6 @@ function applyCast(element, value) {
 	}
 }
 
-/*
 function setCast(doc, id, cast) {
 	var element = doc.getElementById(id);
 	var castElement = doc.getElementById(cast);
@@ -229,7 +233,6 @@ function setCast(doc, id, cast) {
 		}
 	}
 }
-// */
 
 function setCast(doc, id, cast) {
 	var element = doc.getElementById(id);
@@ -250,6 +253,7 @@ function setCasts(ids, casts) {
 		setCast(document, ids[i], casts[i]);
 	}
 }
+// */
 
 function patchATags(node)  // Patches the 'A' tags, so it does open in another browser Windows (when using 'xdhbrwq').
 {
@@ -399,6 +403,7 @@ function fetchWidgets(id) {
 	return digests;
 }
 
+/*
 function fetchCasts(id) {
 	var root = getElement(id);
 	var node = root.firstChild;
@@ -437,6 +442,7 @@ function fetchCasts(id) {
 
 	return digests;
 }
+*/
 
 function getValue(elementOrId)	// Returns the value of element of id 'id'.
 {

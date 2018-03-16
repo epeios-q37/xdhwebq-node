@@ -63,6 +63,7 @@
 				]]>    </DroppableSetter>
     <Fetcher>
      <Events><![CDATA[
+					 console.log( "%XSL%" );
 						removeChildren( "%Id%" );
 						getElement( "%Id%" ).appendChild( transformToFragment( "%XML%", "%XSL%" ) );"";
 						var digests = fetchEventHandlers( "%Id%" );

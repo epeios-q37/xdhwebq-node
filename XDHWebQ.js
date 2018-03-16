@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2007-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 2017 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of XDHWebQ.
 
@@ -21,7 +21,6 @@
 
 'use strict'
 
-var firstAction = "";
 var rootDir = "";
 
 const http = require('http');
@@ -112,28 +111,25 @@ function userHead() {
 }
 
 function prolog() {
-	return '\
-<!DOCTYPE html>\
-<html>\
-	<head>\
-		<meta charset="UTF-8" />\
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">'
-		+ userHead() +
-		'<script src="xdh/xdhtml.js"></script>\
-		<script src="xdh/xdhwebq.js"></script>\
-		<script>handleQuery("?_action='
-		+ firstAction +
-		'")</script>\
-	</head>\
-	<body id="XDHRoot">\
-	</body>\
-</html>\
-		';
+	return [
+	'<!DOCTYPE html>',
+	'<html>',
+	'	<head>',
+	'		<meta charset="UTF-8" />',
+	'		<meta http-equiv="X-UA-Compatible" content="IE=edge" />',
+	userHead(),
+	'		<script src="xdh/xdhtml.js"></script>',
+	'		<script src="xdh/xdhwebq.js"></script>',
+	'		<script>handleQuery("?_action=")</script>',
+	'	</head>',
+	'	<body id="XDHRoot">',
+	'	</body>'
+].join("\n");
 }
 
 function serveQuery(query, res) {
 	var response = "";
-	if (('_action' in query) && (query['_action'] != '')) {
+	if ('_action' in query ) {
 		var keys = new Array();
 		var values = new Array();
 
@@ -221,9 +217,8 @@ function serve(req, res) {
 
 }
 
-function launch(dir, action, service) {
+function launch(dir, service) {
 	cdnPath = path.resolve(dir);
-	firstAction = action;
 
 	if (service === undefined)
 		service = 8080;
@@ -241,8 +236,9 @@ function launch(dir, action, service) {
 
 if (require.main === module) {
 	// Called directly (through a fork or from CLI).
-	if (process.argv.length >= 4) {
-		launch(process.argv[2], process.argv[3], process.argv[4]);
+	if (process.argv.length >= 3) {
+		console.log( process.argv);
+		launch(process.argv[2], process.argv[3]);
 	} else
 		throw "Not enough arguments !";
 } else {
