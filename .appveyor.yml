@@ -31,13 +31,11 @@ install:
 # - npm install node-pre-gyp		# to allow use as module in a JS file (for the test).
 # - npm install njsq
 
-build: off
-
 before_build:
-# - node-pre-gyp configure
+- node-pre-gyp configure
 
 build_script:
-# - node-pre-gyp /m build
+- node-pre-gyp /m build
 
 after_build:
 - node -e "console.log( process.versions.modules + ' - ' + require('./package.json').version)"
