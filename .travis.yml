@@ -21,6 +21,9 @@ script:
 # New
 - npm install
 - make
+- npm explore njsq -- node test.js
+- node test.js
+
 # OLD
 # - npm install njsq
 # - npm explore njsq -- node test.js
