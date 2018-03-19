@@ -24,7 +24,7 @@ os :
 
 install:
 - ps: Install-Product node $env:nodejs_version $env:platform
-- npm install
+- npm install njsq
 
 # OLD BEGIN
 # install:
