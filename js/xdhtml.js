@@ -20,8 +20,6 @@
 const onEventAttributeName = "data-xdh-onevent";
 const onEventsAttributeName = "data-xdh-onevents";
 const widgetAttributeName = "data-xdh-widget";
-// const castAttributeName = "data-xdh-cast";
-// const castsAttributeName = "data-xdh-casts";
 const valueAttributeName = "data-xdh-value";
 const styleId = "XDHStyle";
 
@@ -60,7 +58,6 @@ function getStylesheet(xslName) {
 		xsltProcessor.importStylesheet(parseXML(xslName));
 	} else {
 		let myXMLHTTPRequest = new XMLHttpRequest();
-//		myXMLHTTPRequest.open("GET", "file://h:/hg/epeios/tools/xdhq/examples/common/blank/" + xslName, false);
 		myXMLHTTPRequest.open("GET", xslName, false);
 		myXMLHTTPRequest.send(null);
 
@@ -90,170 +87,12 @@ function removeChildren(elementOrId) {
 	getElement(elementOrId).innerHTML = "";
 }
 
-/*
-function removeCastingChildren(doc) {
-	var element = doc.getElementById('xdh-casting');
-
-	if (element)
-		element.parentNode.removeChild(element);
-
-	doc.head.appendChild(element = doc.createElement('xdh-casting'));
-
-	element.id = 'xdh-casting';
-}
-*/
-
 function handleBooleanAttribute(element, name, flag) {
 	if (flag)
 		element.setAttribute(name, name);
 	else
 		element.removeAttribute(name);
 }
-
-/*
-function applyCast(element, value) {
-	var plainRelated = false;
-	var dragRelated = false;
-	var dropRelated = false;
-
-	var disable = false;
-	var hide = false;
-	var vanish = false;
-	var draggable = false;
-	var droppable = false;
-
-	switch (value) {
-		case '':
-		case null:
-			dragRelated = true;
-			dropRelated = true;
-		case 'Plain':
-			plainRelated = true;
-			break;
-		case 'Disable':
-		case 'Disabled':
-			disable = true;
-			plainRelated = true;
-			break;
-		case 'Hide':
-		case 'Hidden':
-			hide = true;
-			plainRelated = true;
-			break;
-		case 'Vanish':
-		case 'Vanished':
-			vanish = true;
-			plainRelated = true;
-			break;
-		case 'Draggable':
-			draggable = true;
-		case 'Undraggable':
-			dragRelated = true;
-			break;
-		case 'Droppable':
-			droppable = true;
-		case 'Undroppable':
-			dropRelated = true;
-			break;
-		case 'Still':
-			dragRelated = true;
-			dropRelated = true;
-			break;
-		default:
-			throw "Unknown cast value!";
-			break;
-	}
-
-	if (plainRelated) {
-		handleBooleanAttribute(element, 'disabled', disable);
-
-		if (hide) {
-			if (!element.hasAttribute("data-xdh-display-reminder")) {
-				element.setAttribute("data-xdh-display-reminder", element.style.display);
-				element.style.display = "none";
-			}
-		} else {
-			if (element.hasAttribute("data-xdh-display-reminder")) {
-				element.style.display = element.getAttribute("data-xdh-display-reminder");
-				element.removeAttribute("data-xdh-display-reminder");
-			}
-		}
-
-		if (vanish) {
-			if (!element.hasAttribute("data-xdh-borderStyle-reminder")) {
-				element.setAttribute("data-xdh-borderStyle-reminder", element.style.borderStyle);
-				element.style.borderStyle = "none";
-			}
-		} else {
-			if (element.hasAttribute("data-xdh-borderStyle-reminder")) {
-				element.style.borderStyle = element.getAttribute("data-xdh-borderStyle-reminder");
-				element.removeAttribute("data-xdh-borderStyle-reminder");
-			}
-		}
-	}
-
-	if (dragRelated) {
-		handleBooleanAttribute(element, 'draggable', draggable);
-	}
-
-	if (dropRelated) {
-		if (droppable)
-			element.setAttribute("ondragover", "event.preventDefault();");
-		else
-			element.removeAttribute("ondragover");
-	}
-}
-
-function setCast(doc, id, cast) {
-	var element = doc.getElementById(id);
-	var castElement = doc.getElementById(cast);
-
-	if (castElement != null) {
-		var kind = castElement.getAttribute("kind");
-
-		if (kind)
-			applyKind(element, kind);
-
-		var kinds = element.getElementsByTagName("XDH-KIND");
-
-		for (var i = 0; i < kinds.length; i++) {
-			applyKind(Element, kinds[i].nodeValue);
-		}
-
-		var style = doc.getElementById(cast).getAttribute("style");
-
-		if (style)
-			element.setAttribute("style", style);	// element.style = style doesn't work.
-
-		var exec = castElement.getAttribute("exec");
-
-		if (exec) {
-			var script = "var element = document.getElementById( '" + id + "' );" + exec;
-			eval(script);
-		}
-	}
-}
-
-function setCast(doc, id, cast) {
-	var element = doc.getElementById(id);
-
-	if (element != null) {
-		applyCast(element, cast);
-	}
-}
-
-
-function setCasts(ids, casts) {
-	var i = ids.length;
-
-	if (ids.length != casts.length)
-		throw "Inconsistency";
-
-	while (i--) {
-		setCast(document, ids[i], casts[i]);
-	}
-}
-// */
 
 function patchATags(node)  // Patches the 'A' tags, so it does open in another browser Windows (when using 'xdhbrwq').
 {
@@ -402,47 +241,6 @@ function fetchWidgets(id) {
 
 	return digests;
 }
-
-/*
-function fetchCasts(id) {
-	var root = getElement(id);
-	var node = root.firstChild;
-	var cont = true;
-	var candidate;
-	var digests = "";
-
-	if (node == null)
-		cont = false;
-
-	while (cont) {
-		if (node.nodeType == Node.ELEMENT_NODE) {
-			if (node.hasAttribute(castAttributeName)) {
-				digests += "(" + getOrGenerateId(node) + "|" + node.getAttribute(castAttributeName) + ")|";
-				//				node.removeAttribute( castAttributeName );
-			}
-
-			if (node.hasAttribute(castsAttributeName)) {
-				digests += "(" + getOrGenerateId(node) + "|(" + node.getAttribute(castsAttributeName) + "))|";
-				//				node.removeAttribute( castsAttributeName );
-			}
-		}
-
-		if ((candidate = node.firstChild) == null) {
-			while (cont
-				&& ((candidate = node.nextSibling) == null)) {
-				node = node.parentNode;
-
-				if (node.isEqualNode(root))
-					cont = false;
-			}
-		}
-
-		node = candidate;
-	}
-
-	return digests;
-}
-*/
 
 function getValue(elementOrId)	// Returns the value of element of id 'id'.
 {

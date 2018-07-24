@@ -20,6 +20,8 @@
 #ifndef XDHWEBQNJS_INC_
 # define  XDHWEBQNJS_INC_
 
+# include "scli.h"
+
 # define NAME_MC			"XDHWebQNJS"
 # define NAME_LC			"xdhwebqnjs"
 # define NAME_UC			"XDHWEBQNJS"
@@ -28,7 +30,9 @@
 # define AUTHOR_CONTACT		"http://q37.info/contact/"
 # define OWNER_NAME			"Claude SIMON"
 # define OWNER_CONTACT		"http://q37.info/contact/"
-# define COPYRIGHT			COPYRIGHT_YEARS " " OWNER_NAME " (" OWNER_CONTACT ")"	
+# define COPYRIGHT			COPYRIGHT_YEARS " " OWNER_NAME " (" OWNER_CONTACT ")"
+
+SCLI_DEC( xdhwebqnjs );
 
 #endif
 

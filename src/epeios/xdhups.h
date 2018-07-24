@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 1999-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 1999 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of the Epeios framework.
 
@@ -87,9 +87,10 @@ namespace xdhups {
 			const char *Identification );
 		cSession_ *RetrieveCallback(
 			const char *Language,
+			const str::dString &Token,	// If empty, PROD, otherwise DEMO.
 			xdhcmn::cProxy *Callback )
 		{
-			return C_().RetrieveCallback( Language, Callback );
+			return C_().RetrieveCallback( Language, Token, Callback );
 		}
 		const char *BaseLanguage( TOL_CBUFFER___ &Buffer ) const
 		{

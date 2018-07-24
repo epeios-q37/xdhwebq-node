@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 1999-2017 Claude SIMON (http://q37.info/contact/).
+	Copyright (C) 1999 Claude SIMON (http://q37.info/contact/).
 
 	This file is part of the Epeios framework.
 
@@ -199,7 +199,7 @@ static void SetLayout_(
 	cJS &Callback,
 	const nchar__ *Id,	// If 'Id' != NULL, it's the id of the element to apply to, otherwise it applies to the document.
 	const nchar__ *XML,
-	const nchar__ *XSL )
+	const nchar__ *XSL )	// If empty, 'XML' cotains pute '(X)HTML'.
 {
 qRH
 	TOL_CBUFFER___ Result;

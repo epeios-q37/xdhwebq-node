@@ -24,8 +24,9 @@
 #include "xdhwebq.h"
 
 #include "sclargmnt.h"
-#include "sclmisc.h"
 #include "sclnjs.h"
+
+SCLI_DEF( xdhwebqnjs, NAME_LC, "XDHWebQ" );
 
 void sclnjs::SCLNJSInfo( txf::sWFlow &Flow )
 {
@@ -106,7 +107,7 @@ namespace {
 
 	namespace {
 		struct rRack_
-			: public sclnjs::cAsync
+		: public sclnjs::cAsync
 		{
 		protected:
 			virtual void UVQWork( void ) override
@@ -171,12 +172,10 @@ namespace {
 	}
 }
 
-void sclnjs::SCLNJSRegister( sclnjs::sRegistrar &Registrar )
+const scli::sInfo &sclnjs::SCLNJSRegister( sclnjs::sRegistrar &Registrar )
 {
 	Registrar.Register( ReturnArgument_ );
 	Registrar.Register( Init, HandleS_, HandleA_ );
-}
 
-const char *sclmisc::SCLMISCTargetName = NAME_LC;
-const char *sclmisc::SCLMISCProductName = NAME_MC;
-// const char *scln4a::SCLN4AProductVersion = VERSION;
+	return xdhwebqnjs::Info;
+}

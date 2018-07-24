@@ -110,26 +110,28 @@ function userHead() {
 	}
 }
 
-function prolog() {
+function prolog(token) {
+	if (token == undefined)
+		token = "";
 	return [
-	'<!DOCTYPE html>',
-	'<html>',
-	'	<head>',
-	'		<meta charset="UTF-8" />',
-	'		<meta http-equiv="X-UA-Compatible" content="IE=edge" />',
-	userHead(),
-	'		<script src="xdh/xdhtml.js"></script>',
-	'		<script src="xdh/xdhwebq.js"></script>',
-	'		<script>handleQuery("?_action=")</script>',
-	'	</head>',
-	'	<body id="XDHRoot">',
-	'	</body>'
-].join("\n");
+		'<!DOCTYPE html>',
+		'<html>',
+		'	<head id="_xdh_head">',
+		'		<meta name="generator" content="XDHWebQNJS"/>',
+		'		<meta charset="UTF-8" />',
+		'		<meta http-equiv="X-UA-Compatible" content="IE=edge" />',
+		'		<script src="xdh/xdhtml.js"></script>',
+		'		<script src="xdh/xdhwebq.js"></script>',
+		'		<script>handleQuery("?_token=' + token + '&_action=")</script>',
+		'	</head>',
+		'	<body id="XDHRoot">',
+		'	</body>'
+	].join("\n");
 }
 
 function serveQuery(query, res) {
 	var response = "";
-	if ('_action' in query ) {
+	if ('_action' in query) {
 		var keys = new Array();
 		var values = new Array();
 
@@ -138,7 +140,7 @@ function serveQuery(query, res) {
 		new StringStream(njsq._call(xdhwebq, 2, keys, values)).pipe(res);
 		//		njsq._call(xdhwebq, 3, keys, values, (result) => new StringStream(result ).pipe(res));
 	} else {
-		new StringStream(prolog()).pipe(res);
+		new StringStream(prolog(query['_token'])).pipe(res);
 	}
 }
 
@@ -237,15 +239,13 @@ function launch(dir, service) {
 if (require.main === module) {
 	// Called directly (through a fork or from CLI).
 	if (process.argv.length >= 3) {
-//		console.log( process.argv);
+		//		console.log( process.argv);
 		launch(process.argv[2], process.argv[3]);
 	} else
 		throw "Not enough arguments !";
 } else {
 	// Required as a module
 }
-
-
 
 module.exports.returnArgument = (text) => njsq._call(xdhwebq, 0, text);
 module.exports.serve = serve;
